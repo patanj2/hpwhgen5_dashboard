@@ -1,103 +1,51 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime, timedelta
-
 # external library imports
 import dash
+import dash_table
+import configparser
+import pandas as pd
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 
 # local imports
-from view.controls import generate_control_dropdown, generate_mac_address_dropdown
+from view.plots import *
+from view.layouts import *
 from data.data_access import EcoNetHistory
-from view.plots import (generate_time_series_chart, generate_device_accumulators, generate_boxplot,
-                        make_time_series_subplots)
-from view.layouts import get_banner_layout, generate_overview_layout
-
+from view.layouts.tabs import get_tabs_layout
+from view.layouts.device_table import get_device_tab_layout
 
 # TODO: Change to get these items from the configuration
+config = configparser.ConfigParser()
+config.read("./config.ini")
+
 mac_addresses = ["80-91-33-8A-6D-92", "80-91-33-8A-6D-A6", "80-91-33-8A-75-31",
                  "80-91-33-8A-80-99", "80-91-33-8A-80-9F", "80-91-33-8A-80-A6"]
 
 econet_data = EcoNetHistory()
 mac_addresses = [entry['mac_address'] for entry in econet_data.config['field_test_user_info']]
-powerbi_src = "https://app.powerbi.com/reportEmbed?reportId=544f9410-4673-4e7b-9e8c-548a7227175e&autoAuth=true&ctid=c9f9d6eb-ac24-4f8d-ba12-8aca79668852&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXVzLXdlc3QyLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0LyJ9"
 
-# Main Dash Application
+powerbi_src = "https://app.powerbi.com/reportEmbed?reportId=544f9410-4673-4e7b-9e8c-548a7227175e&autoAuth=" \
+              "true&ctid=c9f9d6eb-ac24-4f8d-ba12-8aca79668852&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXVz" \
+              "LXdlc3QyLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0LyJ9"
+
+# ================ Main Dash Application ===================#
+
 app = dash.Dash(__name__, meta_tags=[{"name": "viewport", "content": "width=device-width"}])
-app.title = "Rheem HPWH Gen V Field Test"  # TODO: Convert to configuration
+app.title = config.get('Basic', 'App_title')
 
-device_tab_layout = html.Div(className='row',
-                             children=[
-                                 html.Div(
-                                     children=[html.Div(children=[
-                                         html.P("Device"),
-                                         generate_mac_address_dropdown('dropdown-device', mac_addresses)],
-                                         className='two columns'),
-                                         html.Div(children=[
-                                             html.P("EcoNet Object", ),
-                                             generate_control_dropdown(),
-                                         ],
-                                             className='two columns'),
-                                         html.Div(children=[html.P("Date Range"),
-                                                            dcc.DatePickerRange(
-                                                                min_date_allowed=datetime.today() - timedelta(days=42),
-                                                                max_date_allowed=datetime.today() + timedelta(days=1),
-                                                                start_date=datetime.today() - timedelta(days=42),
-                                                                end_date=datetime.today() + timedelta(days=1),
-                                                                updatemode='bothdates',
-                                                                id='datepicker-range')
-                                                            ], className="five columns")
-                                     ], className="row"
-                                 ),
-                                 html.Div(className='row',
-                                          children=[html.Div(children=[
-                                              html.Div(dcc.Loading(dcc.Graph(id="econet-controls-graph",
-                                                                             config={"displaylogo": False,
-                                                                                     "modeBarButtonsToRemove": [
-                                                                                         'toImage', 'zoomIn2d',
-                                                                                         'zoomOut2d']})),
-                                                       className="four columns",
-                                                       ),
-                                              dcc.Graph(id='horizontal-boxplot',
-                                                        className="one column",
-                                                        config={"displaylogo": False,
-                                                                "displayModeBar": False}
-                                                        ),
-                                              html.Div(dcc.Loading(dcc.Graph(id='counter-plot',
-                                                                             config={"displaylogo": False,
-                                                                                     "displayModeBar": False})),
-                                                       className='two columns')
-                                          ],
-                                              className="row"),
-                                              html.Div(children=[html.Div(dcc.Loading(dcc.Graph(id='multiplot',
-                                                                                                config={
-                                                                                                    "displaylogo": False,
-                                                                                                    "modeBarButtonsToRemove": [
-                                                                                                        'toImage',
-                                                                                                        'zoomIn2d',
-                                                                                                        'zoomOut2d']})),
-                                                                          className='seven columns'),
+latest_sw_version = econet_data.get_latest_sw_version(mac_addresses)
+alarm_counts = econet_data.get_alarm_count_by_code()
+df_locations = pd.DataFrame(econet_data.config['field_test_user_info']).set_index('mac_address')
 
-                                                                 ], className="row")
-                                          ])
-                             ])
+overview_layout = generate_overview_layout(latest_sw_version, alarm_counts, df_locations)
+device_tab_layout = get_device_tab_layout(mac_addresses)
 
-overview_layout = generate_overview_layout(econet_data, mac_addresses)
+tabs_layout = get_tabs_layout(overview_layout, device_tab_layout, powerbi_src)
 banner_layout = get_banner_layout(app)
 
-tabs_layout = html.Div(dcc.Tabs(id="tabs-container", value='tabs-container',
-                                children=[
-                                    dcc.Tab(label='Overview', value='overview-tab',
-                                            children=[overview_layout]),
-                                    dcc.Tab(label='Device', value='device-tab', children=[device_tab_layout]),
-                                    dcc.Tab(label='Reliability Testing', value='power-bi-tab',
-                                            children=[html.Div(html.Iframe(src=powerbi_src, id="powerbi_iframe"))]
-                                            )
-                                ],
-                                className="row"))
-
 app.layout = html.Div(children=[html.Div(children=[banner_layout, tabs_layout])], id="mainContainer")
+
 
 # Callbacks - These update the graphs based on User Input or Other Events
 @app.callback(
@@ -148,7 +96,7 @@ def update_time_series(object_select, device_select, start_date, end_date):
 def update_device_counters(mac_address):
     accumulators = ['HRSHIFAN', 'HRSLOFAN', 'HRSLOHTR', 'HRSUPHTR', 'HRS_COMP']
 
-    plot_data= econet_data.get_device_accumulators(mac_address, accumulators)
+    plot_data = econet_data.get_device_accumulators(mac_address, accumulators)
 
     return generate_device_accumulators(plot_data, accumulators)
 
@@ -163,6 +111,50 @@ def update_device_counters(mac_address):
 def update_boxplot(object_select, device_select, start_date, end_date):
     df = econet_data.query(4736, device_select, start_date, end_date)
     return generate_boxplot(df, object_select)
+
+
+# Update pie chart while user select data on location map
+@app.callback(
+    Output('alarm-chart', 'children'),
+    [Input('location_map', 'selectedData')])
+def update_chart(selectedData):
+    mac_addresses_list = []
+    if selectedData and selectedData['points']:
+        for e in selectedData['points']:
+            mac_addresses_list.append(e['text'].split('</br>')[1])
+    alarm_counts = econet_data.get_alarm_count_by_code(filter=mac_addresses_list)
+    return html.Div(
+        [
+            dcc.Graph(figure=generate_alarm_pie_chart(alarm_counts),
+                      config={'displayLogo': False,
+                              "displayModeBar": False}),
+        ]
+    )
+
+
+# Update device table while user select data on location map
+@app.callback(
+    Output('device-table', 'children'),
+    [Input('location_map', 'selectedData')])
+def update_table(selectedData):
+    ans = []
+    if selectedData and selectedData['points']:
+        for e in selectedData['points']:
+            ans.append(e['text'].split('</br>'))
+    df = pd.DataFrame(ans)
+    df.columns = ["mac address", "Software Version"]
+    return html.Div(
+        [
+            dash_table.DataTable(columns=[{"name": i, "id": i} for i in df.columns],
+                                 data=df.to_dict('records'),
+                                 style_table={
+                                     'maxHeight': '300px',
+                                     'overflowY': 'scroll',
+                                     'border': 'thin lightgrey solid'
+                                 },
+                                 )
+        ]
+    )
 
 
 if __name__ == '__main__':
