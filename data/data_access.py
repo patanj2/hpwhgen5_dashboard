@@ -1,10 +1,10 @@
 import json
 import os
 
-import pandas as pd
 import numpy as np
+import configparser
+import pandas as pd
 from pymongo import MongoClient
-
 from data_preprocessing import clean_data
 
 
@@ -12,9 +12,12 @@ class EcoNetHistory(object):
     # Retrieve the Data on which to do the Dashboard
 
     def __init__(self):
-        client = MongoClient('mongodb://localhost:27017/dev')
+        config = configparser.ConfigParser()
+        config_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..\\config.ini"))
+        config.read(config_path)
+        client = MongoClient(config.get('Mongodb', 'url'))
         self.client=client
-        self.collection = self.client['dev']['history_HPWHGEN512192019']
+        self.collection = self.client[config.get('Mongodb', 'db')][config.get('Mongodb', 'collection')]
         dir_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
         with open(os.path.join(dir_path, 'resources', 'appconfig.json')) as f:
@@ -83,29 +86,34 @@ class EcoNetHistory(object):
         temp = list(cursor)
         return pd.DataFrame(temp).set_index('_id')
 
-    def get_alarm_count_by_code(self):
+    def get_alarm_count_by_code(self, filter=None):
         query = {'device_base_address': 4736}
-        projection = {'ALARM_01': 1, 'ALARM_02': 1, 'ALARM_03': 1, 'ALARM_04': 1, '_id': 0}
+        projection = {'ALARM_01': 1, 'ALARM_02': 1, 'ALARM_03': 1, 'ALARM_04': 1, '_id': 0, 'mac_address': 1}
         cursor = self.collection.find(query, projection)
         data = pd.DataFrame(list(cursor))
+        if filter:
+            data = data.loc[data['mac_address'].isin(filter)]
+            data = data.drop(columns=['mac_address'])
         df_obj = data.select_dtypes(['object'])
         data[df_obj.columns] = df_obj.apply(lambda x: x.str.strip())
 
         temp = data.melt(value_vars=['ALARM_01', 'ALARM_02', 'ALARM_03', 'ALARM_04'],
-                              var_name='alarm_count',
-                              value_name='alarm_code').replace('', np.nan).dropna(how='any').groupby('alarm_code').count().reset_index()
+                         var_name='alarm_count',
+                         value_name='alarm_code'
+                         ).replace('', np.nan).dropna(how='any').groupby('alarm_code').count().reset_index()
 
-        return temp.loc[temp['alarm_code'].str.len() > 0]
-
+        return temp.loc[temp['alarm_code'].astype(str).str.len() > 0]
 
     def read_mongo(self, query={"device_base_address": 4736}):
         """ Read from Mongo and Store into DataFrame """
 
         # Make a query to the specific DB and Collection
         cursor = self.collection.find(query, {"serial_number": 0,
-                                         "transactionId": 0,
-                                         "_id": 0,
-                                         "cloud2_account_id": 0}, limit=600000)
+                                              "transactionId": 0,
+                                              "_id": 0,
+                                              "cloud2_account_id": 0
+                                              },
+                                      limit=600000)
 
         # Expand the cursor and construct the DataFrame
         df = pd.DataFrame(list(cursor))
