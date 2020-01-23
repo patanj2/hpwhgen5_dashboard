@@ -9,40 +9,58 @@ def generate_overview_layout(latest_sw_version, alarm_counts, df_locations):
     device_configuration = html.Div(
         children=[html.Div(children=[html.H5("Device Configuration")], className='row'),
                   html.Div(
-                      children=
-                      [
-                          dash_table.DataTable(
-                              columns=[{"name": i, "id": i} for i in latest_sw_version.columns],
-                              data=latest_sw_version.to_dict('records'),
-                              style_table={
-                                  'maxHeight': '300px',
-                                  'overflowY': 'scroll',
-                                  'border': 'thin lightgrey solid'
-                              },
-                          )
-                      ],
+                      # place holder for table updating in the future
                       id='device-table'
                   )
                   ],
         className='three columns')
 
     alarm_configuration = html.Div(
-        children=[html.Div(children=[html.H5("Alarm Breakdown",
-                                             style={'text-align': 'center',
-                                                    'color': "#2C404C"})], className='row'),
-                  html.Div(
-                      children=[
-                          dcc.Graph(figure=generate_alarm_pie_chart(alarm_counts),
-                                    config={'displayLogo': False,
-                                            "displayModeBar": False}),
-                      ], id='alarm-chart', className='row')],
+        children = [html.Div(children = [html.H5("Alarm Breakdown",
+                                                 style = {'text-align':'center',
+                                                          'color':"#2C404C"})],className = 'row'),
+                    dcc.Loading(
+                             id = 'alarm-loading',
+                             type = "default",
+                             children = [
+                                 html.Div(
+                                     children = [
+                                         # dcc.Graph(figure=generate_alarm_pie_chart(alarm_counts),
+                                         #           config={'displayLogo': False,
+                                         #                   "displayModeBar": False}),
+                                     ],
+                                     id = 'alarm-chart', className = 'row'
+                                 ),
+                             ]
+                         )
+                     ],
         className='four columns')
 
     device_locations = html.Div(
-        children=[dcc.Graph(figure=generate_test_locations_plot(df_locations), id='location_map')],
+        children=[
+            dcc.Graph(
+                figure=generate_test_locations_plot(df_locations),
+                config={
+                    'editable': True,
+                    'modeBarButtonsToRemove':
+                        [
+                            'toImage',
+                            'lasso2d',
+                            'toggleHover',
+                            'hoverClosestGeo',
+                            'hoverClosestGl2d',
+                            'hoverClosestPie',
+                            'hoverClosest3d',
+                            'hoverCompareCartesian',
+                            'hoverClosestCartesian'
+                        ]
+                },
+                id='location_map'
+            )
+        ],
         className='four columns')
 
-    overview_layout = html.Div (children=
+    overview_layout = html.Div(children=
          [device_configuration, alarm_configuration, device_locations],
          id="info-container",
          className="row"
