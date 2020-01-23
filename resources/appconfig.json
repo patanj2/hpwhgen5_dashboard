@@ -34,191 +34,330 @@
     "4": "Vacation"
   },
   "field_test_user_info": [
-    {
-      "mac_address": "80-91-33-8A-6D-92",
-      "lat": 33.6029836,
-      "long": -112.3766632,
-      "user": "acorupe@gmail.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-6D-98",
-      "lat": 40.4093139,
-      "long": -120.7048673,
-      "user": "roadkill150@gmail.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-6D-A6",
-      "lat": 34.0650491,
-      "long": -84.3180902,
-      "user": "edward.holman@rheem.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-6D-B0",
-      "lat": 28.325943,
-      "long": -81.3874635,
-      "user": "cvccole@gmail.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-71-8A",
-      "lat": 32.3904547,
-      "long": -86.2760567,
-      "user": "jared.rocha@rheem.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-75-2E",
-      "lat": 33.2497937,
-      "long": -112.8398411,
-      "user": "waterguytony@gmail.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-75-31",
-      "lat": 28.7320841,
-      "long": -81.4670145,
-      "user": "tix2grrr@hotmail.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-75-4D",
-      "lat": 30.4839112,
-      "long": -81.7434531,
-      "user": "donrull@aol.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-80-98",
-      "lat": 84.9999755,
-      "long": -135.000628,
-      "user": "santa.claus@gmail.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-80-99",
-      "lat": 33.6763818,
-      "long": -111.7602131,
-      "user": "mark.leslie@gmail.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-80-9F",
-      "lat": 33.6310652,
-      "long": -112.1062192,
-      "user": "crankypantsmanda@yahoo.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-80-A6",
-      "lat": 28.9227819,
-      "long": -82.0319862,
-      "user": "joe@jsoldner.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-80-B2",
-      "lat": 33.606364,
-      "long": -112.4227968,
-      "user": "jonathan.bycroft@gmail.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-84-91",
-      "lat": 33.2497937,
-      "long": -112.8398411,
-      "user": "choski@gmail.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-88-39",
-      "lat": 28.4449206,
-      "long": -81.4078258,
-      "user": "mikepapp13@icloud.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-88-45",
-      "lat": 38.6249298,
-      "long": -121.3591972,
-      "user": "onejevon@gmail.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-88-59",
-      "lat": 32.3904547,
-      "long": -86.2760567,
-      "user": "david.i.vega@rheem.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-8C-28",
-      "lat": 33.7981525,
-      "long": -83.7499943,
-      "user": "kgmorris@hotmail.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-8C-31",
-      "lat": 34.0650491,
-      "long": -84.3180902,
-      "user": "christopher.freeman@rheem.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-96-4F",
-      "lat": 84.9999755,
-      "long": -135.000628,
-      "user": "santa.claus@gmail.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-A5-BB",
-      "lat": 38.2519662,
-      "long": -122.6604498,
-      "user": "panamabartholomy@gmail.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-A6-01",
-      "lat": 45.2984874,
-      "long": -122.3533578,
-      "user": "paul.l.gross@icloud.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-A9-11",
-      "lat": 32.3904547,
-      "long": -86.2760567,
-      "user": "brandon_testing@rheem.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-AC-71",
-      "lat": 28.6254478,
-      "long": -81.454795,
-      "user": "oaponte@gmail.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-AC-8D",
-      "lat": 33.9786427,
-      "long": -84.1851038,
-      "user": "ankur321@hotmail.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-CA-66",
-      "lat": 29.0998953,
-      "long": -81.0979757,
-      "user": "ohmichea@yahoo.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-DC-64",
-      "lat": 23.017738,
-      "long": 72.5138113,
-      "user": "kevalpansuriya111@gmail.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-DC-67",
-      "lat": 39.4697139,
-      "long": -82.7436426,
-      "user": "mcconahayt@hotmail.com"
-    },
-    {
-      "mac_address": "80-91-33-8A-DC-69",
-      "lat": 29.9064813,
-      "long": -81.3405168,
-      "user": "noremorse@ruccinet.com"
-    },
-    {
-      "mac_address": "DC-F5-05-D4-22-0B",
-      "lat": 84.9999755,
-      "long": -135.000628,
-      "user": "santa.claus@gmail.com"
-    },
-    {
-      "mac_address": "F0-03-8C-95-FD-9D",
-      "lat": 32.3904547,
-      "long": -86.2760567,
-      "user": "brandon_testing@rheem.com"
-    }
-  ]
+  {
+    "mac_address": "80-91-33-8A-6D-92",
+    "lat": 33.6029836,
+    "long": -112.3766632,
+    "user": "acorupe@gmail.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-6D-98",
+    "lat": 40.4093139,
+    "long": -120.7048673,
+    "user": "roadkill150@gmail.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-6D-A6",
+    "lat": 34.0650491,
+    "long": -84.3180902,
+    "user": "edward.holman@rheem.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-6D-B0",
+    "lat": 28.325943,
+    "long": -81.3874635,
+    "user": "cvccole@gmail.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-71-8A",
+    "lat": 32.3904547,
+    "long": -86.2760567,
+    "user": "jared.rocha@rheem.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-75-2E",
+    "lat": 33.2497937,
+    "long": -112.8398411,
+    "user": "waterguytony@gmail.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-75-31",
+    "lat": 28.7320841,
+    "long": -81.4670145,
+    "user": "tix2grrr@hotmail.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-75-4D",
+    "lat": 30.4839112,
+    "long": -81.7434531,
+    "user": "donrull@aol.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-80-98",
+   "lat": 84.9999755,
+    "long": -135.000628,
+    "user": "santa.claus@gmail.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-80-99",
+    "lat": 33.6763818,
+    "long": -111.7602131,
+    "user": "mark.leslie@gmail.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-80-9F",
+    "lat": 33.6310652,
+    "long": -112.1062192,
+    "user": "crankypantsmanda@yahoo.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-80-A6",
+    "lat": 28.9227819,
+    "long": -82.0319862,
+    "user": "joe@jsoldner.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-80-B2",
+    "lat": 33.606364,
+    "long": -112.4227968,
+    "user": "jonathan.bycroft@gmail.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-84-91",
+    "lat": 33.2497937,
+    "long": -112.8398411,
+    "user": "choski@gmail.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-88-39",
+    "lat": 28.4449206,
+    "long": -81.4078258,
+    "user": "mikepapp13@icloud.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-88-45",
+    "lat": 38.6249298,
+    "long": -121.3591972,
+    "user": "onejevon@gmail.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-88-59",
+    "lat": 32.3904547,
+    "long": -86.2760567,
+    "user": "david.i.vega@rheem.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-8C-28",
+    "lat": 33.7981525,
+    "long": -83.7499943,
+    "user": "kgmorris@hotmail.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-8C-31",
+    "lat": 34.0650491,
+    "long": -84.3180902,
+    "user": "christopher.freeman@rheem.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-96-4F",
+    "lat": 84.9999755,
+    "long": -135.000628,
+    "user": "santa.claus@gmail.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-A5-BB",
+    "lat": 38.2519662,
+    "long": -122.6604498,
+    "user": "panamabartholomy@gmail.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-A6-01",
+    "lat": 45.2984874,
+    "long": -122.3533578,
+    "user": "paul.l.gross@icloud.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-A9-11",
+    "lat": 32.3904547,
+    "long": -86.2760567,
+    "user": "brandon_testing@rheem.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-AC-71",
+    "lat": 28.6254478,
+    "long": -81.454795,
+    "user": "oaponte@gmail.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-AC-8D",
+    "lat": 33.9786427,
+    "long": -84.1851038,
+    "user": "ankur321@hotmail.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-CA-66",
+    "lat": 29.0998953,
+    "long": -81.0979757,
+    "user": "ohmichea@yahoo.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-DC-64",
+    "lat": 23.017738,
+    "long": 72.5138113,
+    "user": "kevalpansuriya111@gmail.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-DC-67",
+    "lat": 39.4697139,
+    "long": -82.7436426,
+    "user": "mcconahayt@hotmail.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-DC-69",
+    "lat": 29.9064813,
+    "long": -81.3405168,
+    "user": "noremorse@ruccinet.com"
+  },
+  {
+    "mac_address": "DC-F5-05-D4-22-0B",
+    "lat": 84.9999755,
+    "long": -135.000628,
+    "user": "santa.claus@gmail.com"
+  },
+  {
+    "mac_address": "F0-03-8C-95-FD-9D",
+    "lat": 32.3904547,
+    "long": -86.2760567,
+    "user": "brandon_testing@rheem.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-AC-7D",
+    "lat": 28.481151,
+    "long": -81.4387894,
+    "user": "mikepapp13@icloud.com"
+  },
+  {
+    "mac_address": "80-91-33-8A-6D-A8",
+    "lat": 40.3026692,
+    "long": -80.0113325,
+    "user":"jasonf"
+  },
+  {
+    "mac_address": "80-91-33-8A-71-50",
+    "lat": 40.1040219,
+    "long": -79.5947071,
+    "user": "SFC Joseph M"
+  },
+  {
+    "mac_address": "80-91-33-8A-71-5B",
+    "lat": 42.1765,
+    "long": -71.7247957,
+    "user": "Nicholas K"
+  },
+  {
+    "mac_address": "80-91-33-8A-75-2D",
+    "lat": 39.9825986,
+    "long": -75.2486591,
+    "user": "Ernest B."
+  },
+  {
+    "mac_address": "80-91-33-8A-75-3B",
+    "lat": 29.7384373,
+    "long": -95.7931452,
+    "user": "Richard W."
+  },
+  {
+    "mac_address": "80-91-33-8A-80-A2",
+    "lat": 42.2715044,
+    "long": -71.4514971,
+    "user": "Vara I"
+  },
+  {
+    "mac_address": "80-91-33-8A-80-A8",
+    "lat": 29.6816458,
+    "long": -98.4650232,
+    "user": "Denise G"
+  },
+  {
+    "mac_address": "80-91-33-8A-80-BE",
+    "lat": 33.450855,
+    "long": -111.9337801,
+    "user": "Steven C"
+  },
+  {
+    "mac_address": "80-91-33-8A-80-C6",
+    "lat": 44.528019,
+    "long": -122.9421147,
+    "user": "Mark K"
+  },
+  {
+    "mac_address": "80-91-33-8A-88-5A",
+    "lat": 35.2959341,
+    "long": -80.6249519,
+    "user": "Dhaval M."
+  },
+  {
+    "mac_address": "80-91-33-8A-8C-25",
+    "lat": 28.0859186,
+    "long": -80.6985492,
+    "user": "Ray L"
+  },
+  {
+    "mac_address": "80-91-33-8A-8C-29",
+    "lat":42.0405341,
+    "long": -72.5606355,
+    "user": "Larry K."
+  },
+  {
+    "mac_address": "80-91-33-8A-8C-2D",
+    "lat":37.3571456,
+    "long": -121.949399,
+    "user": "John C."
+  },
+  {
+    "mac_address": "80-91-33-8A-96-4C",
+    "lat": 40.2790832,
+    "long": -75.2293562,
+    "user": "Nick M."
+  },
+  {
+    "mac_address": "80-91-33-8A-A8-D7",
+    "lat": 47.112081,
+    "long": -122.3097442,
+    "user": "Jonathan C."
+  },
+  {
+    "mac_address": "80-91-33-8A-A8-EB",
+    "lat": 35.5770892,
+    "long": -82.5903683,
+    "user": "Clay P"
+  },
+  {
+    "mac_address": "80-91-33-8A-A9-05",
+    "lat": 41.143423,
+    "long": -78.7039527,
+    "user": "Brandon W."
+  },
+  {
+    "mac_address": "80-91-33-8A-A9-08",
+    "lat": 42.3198109,
+    "long": -72.4991231,
+    "user": "Cedric B."
+  },
+  {
+    "mac_address": "80-91-33-8A-AC-82",
+    "lat": 30.2535622,
+    "long": -94.2037739,
+    "user": "Clayton M."
+  },
+  {
+    "mac_address": "80-91-33-8A-AD-87",
+    "lat": 40.7615895,
+    "long": -80.301714,
+    "user": "Carla S."
+  },
+  {
+    "mac_address": "80-91-33-8A-BB-AD",
+    "lat": 40.1939851,
+    "long": -76.163331,
+    "user": "Stephen M."
+  },
+  {
+    "mac_address": "80-91-33-8A-DC-62",
+    "lat": 44.8793383,
+    "long": -123.0357747,
+    "user": "Joe E"
+  }
+]
+
 }
