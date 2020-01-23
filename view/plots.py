@@ -175,6 +175,8 @@ def generate_alarm_pie_chart(df):
 
 
 def generate_test_locations_plot(df_locations):
+
+
     fig = go.Figure(go.Scattermapbox(
         lat=df_locations.lat,
         lon=df_locations.long,
@@ -183,11 +185,16 @@ def generate_test_locations_plot(df_locations):
         marker=go.scattermapbox.Marker(
             size=6,
             color="red"
+
         ),
-    ))
+
+    ),
+
+    )
 
     fig.update_layout(
         hovermode='closest',
+        margin=dict(l=0, r=0, t=0, b=0),
         mapbox=go.layout.Mapbox(
             accesstoken=MAPBOX_TOKEN,
             bearing=0,
@@ -197,9 +204,12 @@ def generate_test_locations_plot(df_locations):
                 lat=34.065,
                 lon=-84.317
             ),
+
             pitch=0,
             zoom=2.8
-        )
+        ),
+
     )
+
 
     return fig
