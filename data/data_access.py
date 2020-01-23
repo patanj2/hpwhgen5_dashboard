@@ -12,12 +12,12 @@ class EcoNetHistory(object):
     # Retrieve the Data on which to do the Dashboard
 
     def __init__(self):
-        config = configparser.ConfigParser()
-        config_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..\\config.ini"))
-        config.read(config_path)
-        client = MongoClient(config.get('Mongodb', 'url'))
+        config_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..\\config.json"))
+        with open(config_path) as json_file:
+            self.config = json.load(json_file)
+        client = MongoClient(self.config['Mongodb']['url'])
         self.client=client
-        self.collection = self.client[config.get('Mongodb', 'db')][config.get('Mongodb', 'collection')]
+        self.collection = self.client[self.config['Mongodb']['db']][self.config['Mongodb']['collection']]
         dir_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
         with open(os.path.join(dir_path, 'resources', 'appconfig.json')) as f:

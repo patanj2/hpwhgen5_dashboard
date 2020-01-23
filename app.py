@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # external library imports
 import dash
+import json
 import dash_table
-import configparser
 import pandas as pd
 import dash_core_components as dcc
 import dash_html_components as html
@@ -16,8 +16,8 @@ from view.layouts.tabs import get_tabs_layout
 from view.layouts.device_table import get_device_tab_layout
 
 # TODO: Change to get these items from the configuration
-config = configparser.ConfigParser()
-config.read("./config.ini")
+with open("./config.json") as json_file:
+    config = json.load(json_file)
 
 mac_addresses = ["80-91-33-8A-6D-92", "80-91-33-8A-6D-A6", "80-91-33-8A-75-31",
                  "80-91-33-8A-80-99", "80-91-33-8A-80-9F", "80-91-33-8A-80-A6"]
@@ -32,7 +32,7 @@ powerbi_src = "https://app.powerbi.com/reportEmbed?reportId=544f9410-4673-4e7b-9
 # ================ Main Dash Application ===================#
 
 app = dash.Dash(__name__, meta_tags=[{"name": "viewport", "content": "width=device-width"}])
-app.title = config.get('Basic', 'App_title')
+app.title = config['Basic']['App_title']
 
 latest_sw_version = econet_data.get_latest_sw_version(mac_addresses)
 alarm_counts = econet_data.get_alarm_count_by_code()
@@ -115,7 +115,7 @@ def update_boxplot(object_select, device_select, start_date, end_date):
 
 # Update pie chart while user select data on location map
 @app.callback(
-    Output('alarm-chart', 'children'),
+    Output('alarm-loading', 'children'),
     [Input('location_map', 'selectedData')])
 def update_chart(selectedData):
     mac_addresses_list = []
@@ -140,9 +140,11 @@ def update_table(selectedData):
     ans = []
     if selectedData and selectedData['points']:
         for e in selectedData['points']:
-            ans.append(e['text'].split('</br>'))
-    df = pd.DataFrame(ans)
-    df.columns = ["mac address", "Software Version"]
+            ans.append(e['text'].split('</br>')[1])
+    #print(latest_sw_version)
+    df = latest_sw_version.loc[latest_sw_version['Mac address'].isin(ans)] if ans else latest_sw_version
+    df.columns = ["Mac address", "Software Version"]
+
     return html.Div(
         [
             dash_table.DataTable(columns=[{"name": i, "id": i} for i in df.columns],
@@ -158,5 +160,5 @@ def update_table(selectedData):
 
 
 if __name__ == '__main__':
-    # TODO: Update to not use built in web server
-    app.run_server(debug=False, host='0.0.0.0')
+    app.run_server(debug=False)
+
