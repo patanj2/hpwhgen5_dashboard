@@ -2,7 +2,7 @@ import dash_html_components as html
 import dash_core_components as dcc
 
 
-def get_tabs_layout(overview_layout, device_tab_layout, powerbi_src):
+def get_tabs_layout(overview_layout, device_tab_layout, powerbi_src, device_map_layout):
     """
     Generates an html Div containing tabs information for a dashboard.
     :param powerbi_src:
@@ -20,8 +20,13 @@ def get_tabs_layout(overview_layout, device_tab_layout, powerbi_src):
                      dcc.Tab(label='Device', value='device-tab', children=[device_tab_layout]),
                      dcc.Tab(label='Reliability Testing', value='power-bi-tab',
                              children=[html.Div(html.Iframe(src=powerbi_src, id="powerbi_iframe"))]
+                             ),
+                     dcc.Tab(label = 'Device Map',value = 'power-bi-tab',
+                             children = [device_map_layout]
                              )
                  ],
-                 className="row"))
+                 className="row"),
+
+    )
 
     return tabs_layout

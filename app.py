@@ -14,6 +14,7 @@ from view.layouts import *
 from data.data_access import EcoNetHistory
 from view.layouts.tabs import get_tabs_layout
 from view.layouts.device_table import get_device_tab_layout
+from view.layouts.device_map import *
 
 # TODO: Change to get these items from the configuration
 with open("./config.json") as json_file:
@@ -24,6 +25,8 @@ mac_addresses = ["80-91-33-8A-6D-92", "80-91-33-8A-6D-A6", "80-91-33-8A-75-31",
 
 econet_data = EcoNetHistory()
 mac_addresses = [entry['mac_address'] for entry in econet_data.config['field_test_user_info']]
+device_location_data = pd.read_csv('./resources/device_map.csv')
+
 
 powerbi_src = "https://app.powerbi.com/reportEmbed?reportId=544f9410-4673-4e7b-9e8c-548a7227175e&autoAuth=" \
               "true&ctid=c9f9d6eb-ac24-4f8d-ba12-8aca79668852&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXVz" \
@@ -40,8 +43,9 @@ df_locations = pd.DataFrame(econet_data.config['field_test_user_info']).set_inde
 
 overview_layout = generate_overview_layout(latest_sw_version, alarm_counts, df_locations)
 device_tab_layout = get_device_tab_layout(mac_addresses)
+device_map_layout = generate_device_map_layout(device_location_data)
 
-tabs_layout = get_tabs_layout(overview_layout, device_tab_layout, powerbi_src)
+tabs_layout = get_tabs_layout(overview_layout, device_tab_layout, powerbi_src, device_map_layout )
 banner_layout = get_banner_layout(app)
 
 app.layout = html.Div(children=[html.Div(children=[banner_layout, tabs_layout])], id="mainContainer")
@@ -159,6 +163,26 @@ def update_table(selectedData):
     )
 
 
+@app.callback(
+    Output('device-chart', 'children'),
+    [Input('dropdown-device-location', 'value')])
+def update_table(value):
+
+
+    return html.Div(
+        [
+            dcc.Graph(figure = generate_device_map_plot(device_location_data.loc[device_location_data.product_code == value]),
+                      config = {'displayLogo':False,
+                                "displayModeBar":True},
+
+
+
+                      ),
+
+        ],
+
+    )
+
+
 if __name__ == '__main__':
     app.run_server(debug=False)
-

@@ -1,6 +1,8 @@
+import bisect
 import copy
 
 import plotly.graph_objects as go
+import pandas as pd
 import plotly.express as px
 from plotly.subplots import make_subplots
 
@@ -212,4 +214,59 @@ def generate_test_locations_plot(df_locations):
     )
 
 
+    return fig
+
+
+def generate_device_map_plot(device_location_data):
+    df= device_location_data
+    max_cnt = df['count'].max()
+    scale = [(0,5), (6,50), (51,500), (501,5000), (5001, max_cnt)]
+    df=df.sort_values(by = ['count'], ascending = True)
+    count_list = df['count'].tolist()
+    print(count_list)
+    limits = [bisect.bisect_right(count_list, e) for _,e in scale]
+    df['text'] =  'zipcode:' + df['zipcode'].astype(str) + ', cnt:' + df['count'].astype(str)
+    colors=["royalblue","crimson","lightseagreen","orange","lightgrey"]
+    size = [2, 5, 10, 15, 20]
+
+    fig = go.Figure()
+
+    pre_idx = 0
+    print(limits)
+    for i in range(len(limits)):
+        lim=limits[i]
+        df_sub=df[pre_idx:lim]
+        pre_idx = lim+1
+        print(df_sub.shape)
+        fig.add_trace(go.Scattergeo(
+            locationmode = 'USA-states',
+            lon = df_sub['longitude'],
+            lat = df_sub['latitude'],
+            text = df_sub['text'],
+            marker = dict(
+                size = size[i],
+                color = colors[i],
+                line_color = 'rgb(40,40,40)',
+                line_width = 0.5,
+                opacity = 0.5,
+                sizemode = 'area'
+            ),
+            name = '{0} - {1}'.format(scale[i][0],scale[i][1])))
+
+    fig.update_layout(
+        title_text = ''.join(list(set(df['product_code']))) + ' Connected Production Units' + '<br>' ,
+        showlegend = True,
+        geo = dict(
+            scope = 'usa',
+            landcolor = 'rgb(217, 217, 217)',
+        ),
+        height = 1000,  # px
+    )
+
+
+
+    fig.update_layout(
+
+        geo_scope = 'usa',
+    )
     return fig
