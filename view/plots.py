@@ -220,13 +220,14 @@ def generate_test_locations_plot(df_locations):
 def generate_device_map_plot(device_location_data):
     df= device_location_data
     max_cnt = df['count'].max()
-    scale = [(0,5), (6,50), (51,500), (501,5000), (5001, max_cnt)]
+    scale = [(1,3), (4,10), (11,30), (31,60), (61, max_cnt)]
     df=df.sort_values(by = ['count'], ascending = True)
     count_list = df['count'].tolist()
-    print(count_list)
+    print('sum',df['count'].sum())
+    print(df.tail())
     limits = [bisect.bisect_right(count_list, e) for _,e in scale]
     df['text'] =  'zipcode:' + df['zipcode'].astype(str) + ', cnt:' + df['count'].astype(str)
-    colors=["royalblue","crimson","lightseagreen","orange","lightgrey"]
+    colors=["lightgrey","royalblue","crimson","lightseagreen","orange"]
     size = [2, 5, 10, 15, 20]
 
     fig = go.Figure()
