@@ -5,6 +5,6 @@
    "Mongodb":{
       "url":"mongodb://localhost:27017/dev",
       "db":"dev",
-      "collection":"test2"
+      "collection":"history_HPWHGEN512192019"
    }
 }

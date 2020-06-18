@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 # external library imports
 import dash
+import flask
 import json
 import dash_table
 import pandas as pd
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
+from waitress import serve
 
 # local imports
 from view.plots import *
@@ -15,12 +17,11 @@ from data.data_access import EcoNetHistory
 from view.layouts.tabs import get_tabs_layout
 from view.layouts.device_table import get_device_tab_layout
 
-# TODO: Change to get these items from the configuration
+server = flask.Flask(__name__)
+
 with open("./config.json") as json_file:
     config = json.load(json_file)
 
-mac_addresses = ["80-91-33-8A-6D-92", "80-91-33-8A-6D-A6", "80-91-33-8A-75-31",
-                 "80-91-33-8A-80-99", "80-91-33-8A-80-9F", "80-91-33-8A-80-A6"]
 
 econet_data = EcoNetHistory()
 mac_addresses = [entry['mac_address'] for entry in econet_data.config['field_test_user_info']]
@@ -29,9 +30,17 @@ powerbi_src = "https://app.powerbi.com/reportEmbed?reportId=544f9410-4673-4e7b-9
               "true&ctid=c9f9d6eb-ac24-4f8d-ba12-8aca79668852&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXVz" \
               "LXdlc3QyLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0LyJ9"
 
+# external CSS stylesheets
+external_stylesheets = [
+    'https://codepen.io/chriddyp/pen/bWLwgP.css'
+]
+
 # ================ Main Dash Application ===================#
 
-app = dash.Dash(__name__, meta_tags=[{"name": "viewport", "content": "width=device-width"}])
+app = dash.Dash(__name__, meta_tags=[{"name": "viewport", "content": "width=device-width"}],
+                external_stylesheets=external_stylesheets,
+                server=server)
+
 app.title = config['Basic']['App_title']
 
 latest_sw_version = econet_data.get_latest_sw_version(mac_addresses)
@@ -88,6 +97,16 @@ def update_time_series(object_select, device_select, start_date, end_date):
     # TODO Handle
     return generate_time_series_chart(object_select, device_select, df.loc[:, columns])
 
+
+# Selectors -> well text
+@app.callback(
+    Output('devicesText', 'children'),
+    [Input('location_map', 'selectedData')])
+def update_total_devices_text(selectedData):
+    if selectedData:
+        return len(selectedData['points'])
+    else:
+        return 0
 
 @app.callback(
     Output('counter-plot', 'figure'),
@@ -160,5 +179,7 @@ def update_table(selectedData):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=False)
+    #app.run_server(debug=False)
+    serve(app.server, host='0.0.0.0', port=8050, threads=10)
+
 

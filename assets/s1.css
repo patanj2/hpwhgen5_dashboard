@@ -186,14 +186,6 @@ html {
   font-size: 62.5%;
 }
 
-body {
-  font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
-  line-height: 1.6;
-  font-weight: 400;
-  font-family: "Open Sans", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial,
-    sans-serif;
-  color: rgb(50, 50, 50);
-}
 
 /* Typography
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -243,7 +235,7 @@ h5 {
   margin-top: 0.6rem;
 }
 h6 {
-  font-size: 2rem;
+  font-size: 4.0rem;
   line-height: 1.6;
   letter-spacing: 0;
   margin-bottom: 0.75rem;
@@ -568,20 +560,6 @@ there.
   #aggregate_graph {
     position: static !important;
   }
-  .container-display {
-    display: flex;
-  }
-
-
-  .mini_container {
-    margin-bottom: 25px !important;
-    border-radius: 5px;
-    background-color: #ffffff;
-    padding: 15px;
-    position: relative;
-    box-shadow: 2px 2px 2px lightgrey;
-  }
-
   #button {
     display: flex;
     justify-content: center;
